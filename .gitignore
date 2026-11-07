@@ -1,0 +1,35 @@
+# Unity - Archivos y carpetas generados
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Archivos temporales de Visual Studio
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+
+# Archivos temporales del sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Archivos temporales y copias de seguridad
+*.tmp
+*.bak
+*.swp
+
+# Unity - Cachés y archivos de compilación
+.gradle/
+*.apk
+*.aab
