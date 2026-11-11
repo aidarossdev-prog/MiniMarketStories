@@ -16,158 +16,116 @@ public int deliveryLevel = 1;
 
     private int deliveredCount = 0;
 
-[Header("Productos del nivel 1")]
-public GameObject[] levelProducts;
 
 private void Start()
 {
+    // Comprobar las referencias necesarias.
     if (gameManager == null || shelfPlacement == null)
     {
-        Debug.LogWarning("Faltan referencias en ProductDelivery.");
+        Debug.LogWarning(
+            "Faltan referencias en ProductDelivery: " +
+            gameObject.name
+        );
+
         return;
     }
 
-    // Comenzar sin posiciones ocupadas
+    // Inicializar el contador del anaquel.
     deliveredCount = 0;
 
-    // Restaurar las latas que ya fueron entregadas
-    foreach (GameObject product in levelProducts)
-    {
-        if (product == null)
-            continue;
-
-        ProductPersistence persistence =
-            product.GetComponent<ProductPersistence>();
-
-        if (persistence == null)
-            continue;
-
-        if (persistence.WasDelivered())
-        {
-            // Separar la lata de cualquier objeto anterior
-            product.transform.SetParent(null);
-
-            // Colocarla en la siguiente posición disponible
-            product.transform.position =
-                shelfPlacement.position +
-                shelfPlacement.right * (deliveredCount * productSpacing);
-
-            product.transform.rotation = shelfPlacement.rotation;
-
-            // Desactivar su Collider
-            Collider productCollider =
-                product.GetComponent<Collider>();
-
-            if (productCollider != null)
-                productCollider.enabled = false;
-
-            product.SetActive(true);
-
-            deliveredCount++;
-        }
-        else
-        {
-            // Las latas pendientes permanecen disponibles
-            product.SetActive(true);
-
-            Collider productCollider =
-                product.GetComponent<Collider>();
-
-            if (productCollider != null)
-            {
-                productCollider.enabled = true;
-                productCollider.isTrigger = true;
-            }
-        }
-    }
-
-    Debug.Log("Latas restauradas en el anaquel: " + deliveredCount);
+    Debug.Log(
+        "Anaquel preparado para niveles dinámicos: " +
+        gameObject.name
+    );
 }
 
     private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player"))
-            return;
-
-        ProductCollector collector = other.GetComponent<ProductCollector>();
-
-        if (collector == null || !collector.HasProduct())
-            return;
-
-        GameObject product = collector.carriedProduct;
-
-// Verificar que exista el administrador del juego
-if (gameManager == null)
-    return;
-
-// Verificar que estamos en el nivel correspondiente
-if (gameManager.currentLevel != deliveryLevel)
-    return;
-
-// Verificar que todavía faltan productos por entregar
-int requiredProducts =
-    gameManager.productQuantities[deliveryLevel - 1];
-
-if (gameManager.collectedProducts >= requiredProducts)
-    return;
-
-// Verificar que el producto pertenece al nivel actual
-bool validProduct = false;
-
-foreach (GameObject levelProduct in levelProducts)
 {
-    if (levelProduct == product)
-    {
-        validProduct = true;
-        break;
-    }
-}
+    // Verificar que sea el jugador.
+    if (!other.CompareTag("Player"))
+        return;
 
-if (!validProduct)
-    return;
+    // Comprobar que el jugador transporte un producto.
+    ProductCollector collector =
+        other.GetComponent<ProductCollector>();
 
-// Separar el producto del personaje
-product.transform.SetParent(null);
+    if (collector == null || !collector.HasProduct())
+        return;
 
-        // Colocar cada producto en una posición diferente
-        if (shelfPlacement != null)
-        {
-            Vector3 newPosition = shelfPlacement.position
-                + shelfPlacement.right * (deliveredCount * productSpacing);
+    // Verificar las referencias necesarias.
+    if (gameManager == null || shelfPlacement == null)
+        return;
 
-            product.transform.position = newPosition;
-            product.transform.rotation = shelfPlacement.rotation;
-        }
+    GameObject product = collector.carriedProduct;
 
-        // Desactivar el Collider para mantener el producto fijo
-        Collider productCollider = product.GetComponent<Collider>();
+    // Obtener la información del producto generado.
+    GeneratedProduct generatedProduct =
+        product.GetComponent<GeneratedProduct>();
 
-        if (productCollider != null)
-        {
-            productCollider.enabled = false;
-        }
+    if (generatedProduct == null)
+        return;
 
-        // Guardar el identificador del producto entregado
-ProductPersistence persistence =
-    product.GetComponent<ProductPersistence>();
+    // Verificar que el producto pertenezca al nivel actual.
+    if (generatedProduct.level != gameManager.currentLevel)
+        return;
 
-if (persistence != null)
-{
-    persistence.MarkAsDelivered();
-}
+    // Verificar que este anaquel corresponda al nivel.
+    // Alternamos entre los dos anaqueles disponibles.
+    int expectedDeliveryLevel =
+        ((gameManager.currentLevel - 1) % 2) + 1;
 
-// Liberar al personaje
+    if (deliveryLevel != expectedDeliveryLevel)
+        return;
+
+    // Evitar entregar nuevamente el mismo producto.
+    if (generatedProduct.isDelivered)
+        return;
+
+    // Colocar el producto sobre el anaquel.
+    product.transform.SetParent(null);
+
+    Vector3 newPosition =
+        shelfPlacement.position +
+        shelfPlacement.right * (deliveredCount * productSpacing);
+
+    product.transform.position = newPosition;
+    product.transform.rotation = shelfPlacement.rotation;
+
+    // Desactivar su Collider para evitar nuevas interacciones.
+    Collider productCollider = product.GetComponent<Collider>();
+
+    if (productCollider != null)
+        productCollider.enabled = false;
+
+   // Registrar la entrega.
+generatedProduct.MarkAsDelivered();
+
+// Liberar el producto de las manos del jugador.
 collector.carriedProduct = null;
 
-// Registrar la entrega
+// Actualizar el contador del anaquel.
 deliveredCount++;
 
-        // Actualizar el contador del juego
-        if (gameManager != null)
-        {
-            gameManager.ProductDelivered();
-        }
+// Registrar la entrega antes de cambiar de nivel.
+Debug.Log(
+    "Producto entregado en nivel " +
+    generatedProduct.level
+);
 
-        Debug.Log("¡Producto entregado! Total en anaquel: " + deliveredCount);
-    }
+// Actualizar la puntuación y comprobar
+// si corresponde avanzar al siguiente nivel.
+gameManager.ProductDelivered();
+}
+
+public void ResetShelf()
+{
+    // Reiniciar el contador de productos colocados.
+    deliveredCount = 0;
+
+    Debug.Log(
+        "Anaquel reiniciado: " + gameObject.name
+    );
+}
+
+
 }

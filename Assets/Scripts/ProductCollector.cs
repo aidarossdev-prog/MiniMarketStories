@@ -18,41 +18,35 @@ public class ProductCollector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
 {
-    // No recoger otro producto si ya transportamos uno
+    // Evitar recoger más de un producto.
     if (HasProduct())
         return;
 
-    // Comprobar que sea un producto
+    // Comprobar que el objeto sea un producto.
     if (!other.CompareTag("Product"))
         return;
 
-    // Verificar que exista GameManager
+    // Verificar la referencia al administrador del juego.
     if (gameManager == null)
         return;
 
-    // Identificar el producto
-    ProductPersistence persistence =
-        other.GetComponent<ProductPersistence>();
+    // Obtener la información del producto generado.
+    GeneratedProduct generatedProduct =
+        other.GetComponent<GeneratedProduct>();
 
-    if (persistence == null)
+    // Ignorar productos que no pertenezcan al sistema dinámico.
+    if (generatedProduct == null)
         return;
 
-    // Comprobar a qué nivel pertenece
-    int productLevel = 0;
-
-    if (persistence.productID >= 1 && persistence.productID <= 3)
-        productLevel = 1;
-    else if (persistence.productID >= 4 && persistence.productID <= 8)
-        productLevel = 2;
-
-    // Recoger únicamente productos del nivel actual
-    if (productLevel != gameManager.currentLevel)
+    // Comprobar que el producto corresponda al nivel actual.
+    if (generatedProduct.level != gameManager.currentLevel)
         return;
 
-    // Evitar recoger productos que ya fueron entregados
-    if (persistence.WasDelivered())
+    // Evitar recoger productos ya entregados.
+    if (generatedProduct.isDelivered)
         return;
 
+    // Recoger el producto.
     PickUpProduct(other.gameObject);
 }
 
@@ -71,4 +65,27 @@ public class ProductCollector : MonoBehaviour
 
         Debug.Log("Producto recogido: " + product.name);
     }
+
+    public void ClearCarriedProduct()
+{
+    // Comprobar si el jugador transporta un producto.
+    if (carriedProduct == null)
+        return;
+
+    // Guardar la referencia al producto.
+    GameObject product = carriedProduct;
+
+    // Liberar la referencia del jugador.
+    carriedProduct = null;
+
+    // Desactivar el producto inmediatamente.
+    product.SetActive(false);
+
+    // Eliminar el producto de la escena.
+    Destroy(product);
+
+    Debug.Log("Producto transportado eliminado correctamente.");
+}
+
+
 }
