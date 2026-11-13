@@ -16,6 +16,9 @@ public GameObject gameOverPanel;
     [Header("Generación dinámica de niveles")]
 public LevelGenerator levelGenerator;
 
+[Header("Ambientes dinámicos")]
+public EnvironmentColorManager environmentManager;
+
 [Header("Anaqueles del minimercado")]
 public ProductDelivery[] deliveryShelves;
 
@@ -64,6 +67,11 @@ if (gameOverPanel != null)
 
     // Actualizar la interfaz.
     UpdateUI();
+
+    if (environmentManager != null)
+    {
+    environmentManager.SetEnvironmentByLevel(currentLevel);
+    }
 
     // Generar los productos del nivel actual.
     if (levelGenerator != null)
@@ -178,6 +186,11 @@ private void StartLevelTimer()
 
     // Reiniciar el contador de productos entregados.
     collectedProducts = 0;
+
+    if (environmentManager != null)
+    {
+    environmentManager.SetEnvironmentByLevel(currentLevel);
+    }
 
     // Reiniciar los contadores de ambos anaqueles.
     ResetDeliveryShelves();
@@ -346,6 +359,11 @@ public void ResetProgress()
     currentLevel = 1;
     collectedProducts = 0;
     totalScore = 0;
+
+    if (environmentManager != null)
+    {
+    environmentManager.SetEnvironmentByLevel(currentLevel);
+    }
 
 // Eliminar cualquier producto que transporte el jugador.
 if (playerCollector != null)

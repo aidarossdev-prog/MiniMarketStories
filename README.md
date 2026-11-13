@@ -275,6 +275,47 @@ En esta escena se ejecutan las mecánicas de recolección, entrega, generación 
 - [ ] Ajustes adicionales al sistema de progreso y reinicio.
 - [ ] Pruebas de jugabilidad y rendimiento.
 
+### Etapa 4. Iluminación y personalización visual
+
+En esta etapa se implementaron mejoras en la iluminación y apariencia del videojuego **Mini Market Stories**, con el propósito de crear un entorno visual más atractivo y dinámico.
+
+### Iluminación del escenario
+
+Se configuró una luz direccional en tiempo real para mejorar la iluminación general del minimercado. También se ajustaron sus propiedades y los parámetros del entorno para mantener una apariencia visual agradable durante la partida.
+
+### Cambio dinámico de ambientes
+
+Se desarrolló el script `EnvironmentColorManager.cs`, que permite modificar el color de fondo de la cámara y la iluminación principal.
+
+Se implementaron tres ambientes:
+
+- **Mañana:** iluminación cálida.
+- **Atardecer:** iluminación con tonalidades rosadas.
+- **Noche:** iluminación con tonalidades azuladas.
+
+Los ambientes cambian automáticamente cada dos niveles y se repiten de manera cíclica. También es posible alternarlos manualmente mediante la tecla **C** para realizar pruebas.
+
+### Personalización del personaje
+
+Se desarrolló el script `PlayerAppearance.cs`, que permite modificar las propiedades visuales del personaje.
+
+Las opciones implementadas incluyen:
+
+- Cambio entre tres colores.
+- Ajuste de la propiedad *Metallic*.
+- Ajuste de la propiedad *Smoothness*.
+- Cambio manual de color mediante la tecla **V**.
+
+### Mejoras visuales adicionales
+
+Se revisaron los efectos de posprocesamiento del escenario y se desactivó el efecto *Bloom* para evitar un resplandor excesivo durante la partida.
+
+### Resultado
+
+Las mejoras implementadas permiten que el minimercado presente diferentes ambientes visuales conforme el jugador avanza de nivel, mientras que el personaje cuenta con opciones de personalización de color y apariencia.
+
+Estas modificaciones se integraron sin alterar las mecánicas principales de recolección, entrega de productos y progresión de niveles.
+
 ## 👩‍💻 Autora
 
 **Aida Rosas Romero**  

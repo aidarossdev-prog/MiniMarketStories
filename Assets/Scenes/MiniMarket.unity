@@ -427,6 +427,7 @@ MonoBehaviour:
   textTimer: {fileID: 604675446}
   gameOverPanel: {fileID: 1741203148}
   levelGenerator: {fileID: 1442134555}
+  environmentManager: {fileID: 1343424977}
   deliveryShelves: []
   playerCollector: {fileID: 0}
   initialLevelTime: 90
@@ -608,7 +609,7 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1336,7 +1337,7 @@ Light:
   serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1379,7 +1380,7 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 5000
+  m_ColorTemperature: 4500
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -1399,7 +1400,7 @@ Transform:
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -0.000000044703484, y: 3, z: 0.000000067055225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4169,6 +4170,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267235130}
   m_CullTransparentMesh: 1
+--- !u!1 &1343424976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1343424978}
+  - component: {fileID: 1343424977}
+  m_Layer: 0
+  m_Name: EnvironmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1343424977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343424976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bf7a2016485e544b4cfc9d0dc46aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentColorManager
+  mainCamera: {fileID: 330585545}
+  directionalLight: {fileID: 410087040}
+  lightColors:
+  - {r: 1, g: 0.953504, b: 0.8915094, a: 1}
+  - {r: 0.9245283, g: 0.73772687, b: 0.6061766, a: 1}
+  - {r: 0.6247775, g: 0.71641153, b: 0.9811321, a: 1}
+  backgroundColors:
+  - {r: 1, g: 0.9, b: 0.82, a: 1}
+  - {r: 1, g: 0.82, b: 0.88, a: 1}
+  - {r: 0.78, g: 0.8, b: 1, a: 1}
+--- !u!4 &1343424978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343424976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.86455, y: 2.42908, z: 5.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1344239993
 GameObject:
   m_ObjectHideFlags: 0
@@ -6081,6 +6136,7 @@ GameObject:
   - component: {fileID: 1813695793}
   - component: {fileID: 1813695798}
   - component: {fileID: 1813695799}
+  - component: {fileID: 1813695800}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6244,6 +6300,25 @@ MonoBehaviour:
   carriedProduct: {fileID: 0}
   gameManager: {fileID: 272907940}
   carryOffset: {x: 0, y: 0.2, z: 0.8}
+--- !u!114 &1813695800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813695792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb54c45a71d824c4388a141bf276526a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAppearance
+  playerRenderer: {fileID: 1813695795}
+  playerColors:
+  - {r: 0.85, g: 0.65, b: 0.8, a: 1}
+  - {r: 0.7, g: 0.65, b: 0.9, a: 1}
+  - {r: 0.6, g: 0.8, b: 0.9, a: 1}
+  metallic: 0
+  smoothness: 0.5
 --- !u!1 &1825916066
 GameObject:
   m_ObjectHideFlags: 0
@@ -6896,3 +6971,4 @@ SceneRoots:
   - {fileID: 694136853}
   - {fileID: 1442134556}
   - {fileID: 343152612}
+  - {fileID: 1343424978}
