@@ -266,15 +266,6 @@ En esta escena se ejecutan las mecánicas de recolección, entrega, generación 
 - [x] Opción para reiniciar la partida desde el nivel 1.
 - [x] Opción para regresar al menú principal.
 
-### Próximas etapas
-
-- [ ] Incorporación de nuevos tipos de productos.
-- [ ] Ampliación de las dinámicas de juego.
-- [ ] Mejoras visuales y de interacción.
-- [ ] Optimización para dispositivos móviles.
-- [ ] Ajustes adicionales al sistema de progreso y reinicio.
-- [ ] Pruebas de jugabilidad y rendimiento.
-
 ### Etapa 4. Iluminación y personalización visual
 
 En esta etapa se implementaron mejoras en la iluminación y apariencia del videojuego **Mini Market Stories**, con el propósito de crear un entorno visual más atractivo y dinámico.
@@ -315,6 +306,55 @@ Se revisaron los efectos de posprocesamiento del escenario y se desactivó el ef
 Las mejoras implementadas permiten que el minimercado presente diferentes ambientes visuales conforme el jugador avanza de nivel, mientras que el personaje cuenta con opciones de personalización de color y apariencia.
 
 Estas modificaciones se integraron sin alterar las mecánicas principales de recolección, entrega de productos y progresión de niveles.
+
+## Etapa 5. Interfaces de usuario y navegación
+
+En esta etapa se revisaron y validaron las interfaces de usuario del videojuego **Mini Market Stories**, con el objetivo de garantizar una navegación funcional entre las diferentes pantallas y permitir que el jugador interactúe correctamente con la aplicación.
+
+### Menú principal
+
+Se cuenta con una interfaz desarrollada mediante Canvas, que incluye el título del videojuego, un fondo visual y tres botones principales:
+
+- **Jugar:** permite iniciar la partida y acceder al minimercado.
+- **Cómo jugar:** muestra las instrucciones y mecánicas del videojuego.
+- **Salir:** permite cerrar la aplicación.
+
+### Navegación entre escenas
+
+La navegación se administra mediante el script `MainMenuManager.cs`, utilizando la clase `SceneManager` de Unity.
+
+Se implementaron y comprobaron las siguientes transiciones:
+
+- `MainMenu → MiniMarket`
+- `MainMenu → HowToPlay`
+- `HowToPlay → MainMenu`
+- `MiniMarket → MainMenu`
+
+Estas transiciones permiten que el jugador se desplace entre las pantallas principales del videojuego.
+
+### Interfaz durante la partida
+
+La escena `MiniMarket` cuenta con elementos de interfaz que muestran información importante para el jugador, como el nivel actual, el tiempo disponible, los productos recolectados y la puntuación.
+
+También incluye controles para interactuar con el personaje y opciones de navegación para regresar al menú principal.
+
+### Progresión entre niveles
+
+El videojuego permite completar niveles consecutivos mediante los sistemas `GameManager` y `LevelGenerator`.
+
+Al completar los objetivos de un nivel, se genera el siguiente dentro de la misma escena, actualizando los productos y las condiciones de la partida.
+
+### Pruebas de funcionamiento
+
+Se realizaron pruebas de navegación entre las escenas, funcionamiento de los botones y progresión entre niveles consecutivos.
+
+Durante las pruebas realizadas en el editor de Unity, las interfaces y transiciones funcionaron correctamente, sin presentar errores en la consola.
+
+### Resultado
+
+Las interfaces implementadas permiten que el jugador navegue entre el menú principal, las instrucciones y el escenario de juego de manera funcional.
+
+Asimismo, el sistema de progresión permite continuar jugando durante varios niveles consecutivos, cumpliendo con los objetivos de navegación e interacción establecidos para esta etapa.
 
 ## 👩‍💻 Autora
 
