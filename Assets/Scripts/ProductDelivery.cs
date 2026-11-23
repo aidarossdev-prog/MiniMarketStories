@@ -12,9 +12,12 @@ public int deliveryLevel = 1;
     public Transform shelfPlacement;
 
     [Header("Organización del anaquel")]
-    public float productSpacing = 0.5f;
+public float productSpacing = 0.5f;
 
-    private int deliveredCount = 0;
+[Min(1)]
+public int maximumVisibleProducts = 6;
+
+private int deliveredCount = 0;
 
 
 private void Start()
@@ -81,9 +84,11 @@ private void Start()
     if (generatedProduct.isDelivered)
         return;
 
-    // Colocar el producto sobre el anaquel.
-    product.transform.SetParent(null);
+    // Colocar únicamente los primeros productos en el anaquel.
+product.transform.SetParent(null);
 
+if (deliveredCount < maximumVisibleProducts)
+{
     Vector3 newPosition =
         shelfPlacement.position +
         shelfPlacement.right * (deliveredCount * productSpacing);
@@ -91,11 +96,21 @@ private void Start()
     product.transform.position = newPosition;
     product.transform.rotation = shelfPlacement.rotation;
 
-    // Desactivar su Collider para evitar nuevas interacciones.
-    Collider productCollider = product.GetComponent<Collider>();
+    // Desactivar las colisiones del producto entregado.
+    Collider[] productColliders =
+        product.GetComponentsInChildren<Collider>();
 
-    if (productCollider != null)
+    foreach (Collider productCollider in productColliders)
+    {
         productCollider.enabled = false;
+    }
+}
+else
+{
+    // Evitar acumular productos fuera del anaquel.
+    product.SetActive(false);
+    Destroy(product);
+}
 
    // Registrar la entrega.
 generatedProduct.MarkAsDelivered();

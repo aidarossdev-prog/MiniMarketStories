@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerAppearance : MonoBehaviour
 {
-    [Header("Renderizador del personaje")]
-    public Renderer playerRenderer;
+    [Header("Renderizadores del robot")]
+    public Renderer[] robotRenderers;
 
     [Header("Colores disponibles")]
     public Color[] playerColors =
@@ -21,25 +21,30 @@ public class PlayerAppearance : MonoBehaviour
     [Range(0f, 1f)]
     public float smoothness = 0.5f;
 
-    private Material playerMaterial;
+    private Material[] robotMaterials;
     private int currentColorIndex = 0;
 
     private void Start()
     {
-        if (playerRenderer == null)
+        if (robotRenderers == null || robotRenderers.Length == 0)
         {
-            playerRenderer = GetComponent<Renderer>();
-        }
-
-        if (playerRenderer == null)
-        {
-            Debug.LogWarning("No se encontró el Renderer del personaje.");
+            Debug.LogWarning(
+                "No se asignaron renderizadores al robot."
+            );
             return;
         }
 
-        // Crea una instancia del material para no modificar
-        // permanentemente el material original MAT_Player.
-        playerMaterial = playerRenderer.material;
+        robotMaterials = new Material[robotRenderers.Length];
+
+        for (int i = 0; i < robotRenderers.Length; i++)
+        {
+            if (robotRenderers[i] != null)
+            {
+                // Instancia independiente para no modificar
+                // los materiales originales del proyecto.
+                robotMaterials[i] = robotRenderers[i].material;
+            }
+        }
 
         ApplyAppearance();
     }
@@ -55,7 +60,7 @@ public class PlayerAppearance : MonoBehaviour
 
     public void NextPlayerColor()
     {
-        if (playerMaterial == null ||
+        if (robotMaterials == null ||
             playerColors == null ||
             playerColors.Length == 0)
         {
@@ -70,34 +75,44 @@ public class PlayerAppearance : MonoBehaviour
 
     public void ApplyAppearance()
     {
-        if (playerMaterial == null ||
+        if (robotMaterials == null ||
             playerColors == null ||
             playerColors.Length == 0)
         {
             return;
         }
 
-        playerMaterial.SetColor(
-            "_BaseColor",
-            playerColors[currentColorIndex]
-        );
+        foreach (Material material in robotMaterials)
+        {
+            if (material == null)
+                continue;
 
-        playerMaterial.SetFloat("_Metallic", metallic);
-        playerMaterial.SetFloat("_Smoothness", smoothness);
+            material.SetColor(
+                "_BaseColor",
+                playerColors[currentColorIndex]
+            );
+
+            material.SetFloat("_Metallic", metallic);
+            material.SetFloat("_Smoothness", smoothness);
+        }
 
         Debug.Log(
-            "Apariencia del personaje actualizada. Color: " +
-            currentColorIndex +
-            " | Metallic: " + metallic +
-            " | Smoothness: " + smoothness
+            "Apariencia del robot actualizada. Color: " +
+            currentColorIndex
         );
     }
 
     private void OnDestroy()
     {
-        if (playerMaterial != null)
+        if (robotMaterials == null)
+            return;
+
+        foreach (Material material in robotMaterials)
         {
-            Destroy(playerMaterial);
+            if (material != null)
+            {
+                Destroy(material);
+            }
         }
     }
 }

@@ -422,6 +422,55 @@ La implementación del Speed Boost permite que el jugador experimente un cambio 
 
 Esta mecánica complementa el sistema de niveles y aporta mayor variedad a la experiencia de juego, manteniendo el funcionamiento de la recolección y entrega de productos.
 
+## Mejoras adicionales: personaje robótico y optimización de anaqueles
+
+Como parte de las mejoras finales de **Mini Market Stories**, se realizaron ajustes visuales y funcionales para fortalecer la identidad del videojuego y mejorar la experiencia del jugador.
+
+### 🤖 Implementación de un personaje robótico
+
+Se reemplazó la apariencia de cápsula del personaje principal por un pequeño robot flotante de estilo low-poly, diseñado directamente en Unity mediante objetos tridimensionales básicos.
+
+El robot cuenta con los siguientes elementos:
+
+- Cabeza rectangular con dos ojos violetas.
+- Cuerpo compacto con brazos laterales.
+- Propulsor inferior que simula un sistema de flotación.
+- Materiales personalizados en tonos azul grisáceo y violeta.
+- Diseño visual adaptado a la estética del minimercado.
+
+Para su implementación, se creó el objeto `RobotVisual` como hijo de `Player`, conservando la cápsula original como estructura física invisible. Esto permitió mantener los sistemas de movimiento, colisiones, recolección de productos y Speed Boost sin modificar sus mecánicas.
+
+También se actualizó el script `PlayerAppearance.cs` para permitir que el jugador continúe personalizando el personaje mediante la tecla **V**, alternando entre tres colores: rosa pastel, lavanda y azul cielo.
+
+### 🛒 Optimización de los anaqueles
+
+Se realizaron ajustes al sistema de entrega y colocación de productos para mejorar su organización visual y evitar interferencias con el desplazamiento del personaje.
+
+Las mejoras implementadas incluyen:
+
+- Reducción de la separación entre productos a `0.3` unidades.
+- Límite de seis productos visibles por anaquel.
+- Registro de entregas adicionales sin necesidad de mostrar más productos.
+- Desactivación de las colisiones de los productos entregados.
+- Reinicio de los contadores de colocación al comenzar un nuevo nivel.
+
+Estas modificaciones permiten mantener los productos dentro del espacio disponible y evitar que las entregas de niveles anteriores afecten su distribución.
+
+### ✅ Pruebas de funcionamiento
+
+Después de implementar las mejoras, se realizaron pruebas para comprobar:
+
+- Movimiento y desplazamiento del nuevo personaje.
+- Funcionamiento del sistema de personalización de colores.
+- Recolección y entrega de productos.
+- Activación del Speed Boost y su efecto visual.
+- Distribución y reinicio de los productos en los anaqueles.
+
+Los resultados fueron satisfactorios, manteniendo las funcionalidades previamente desarrolladas.
+
+### Resultado
+
+Estas mejoras permiten que **Mini Market Stories** cuente con un personaje principal más representativo de su identidad visual, además de un sistema de entrega de productos mejor organizado. La implementación se realizó aprovechando la estructura y programación existentes, evitando modificaciones innecesarias en las mecánicas del videojuego.
 
 
 ## 👩‍💻 Autora
