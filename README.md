@@ -562,6 +562,34 @@ Con ello, se completa el proceso de desarrollo del videojuego, desde la implemen
 
 Esta etapa también permitió comprender la importancia de configurar correctamente los parámetros técnicos de cada sistema operativo y realizar pruebas de funcionamiento antes de distribuir una aplicación.
 
+## 🎮 Descarga del videojuego
+
+**Mini Market Stories v1.0** está disponible para Android y Windows.
+
+Los archivos ejecutables se encuentran publicados en la sección **Releases** de este repositorio.
+
+### 📱 Android
+
+- **Archivo:** `MiniMarketStories_v1.0.apk`
+- **Sistema operativo mínimo:** Android 8.0.
+- **Arquitectura:** ARM64.
+- **Estado:** Compilación completada; pendiente de pruebas en un dispositivo Android.
+
+### 🖥️ Windows
+
+- **Archivo:** `MiniMarketStories_Windows_v1.0.zip`
+- **Sistema operativo:** Windows de 64 bits.
+- **Estado:** Compilación y pruebas de funcionamiento completadas.
+
+Para ejecutar la versión de Windows, descarga el archivo ZIP, extrae todo su contenido y abre `Mini Market Stories.exe`.
+
+### 📦 Acceso a los ejecutables
+
+Consulta la sección **Releases → Mini Market Stories v1.0** para descargar la versión correspondiente a tu dispositivo.
+
+**Nota:** La versión para Windows se distribuye como archivo ZIP porque requiere conservar el ejecutable junto con sus dependencias.
+
+
 ## 👩‍💻 Autora
 
 **Aida Rosas Romero**  
