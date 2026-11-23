@@ -19,6 +19,11 @@ public class LevelGenerator : MonoBehaviour
 
     private readonly List<GameObject> activeProducts = new List<GameObject>();
 
+    [Header("Potenciador de velocidad")]
+    public GameObject speedBoostPrefab;
+    public Transform[] speedBoostSpawnPoints;
+
+    private GameObject activeSpeedBoost;
     public int GetProductCount(int level)
 {
     // Calcular la cantidad según la dificultad.
@@ -95,6 +100,27 @@ activeProducts.Add(newProduct);
 
         }
 
+        // Generar un potenciador en una posición aleatoria.
+if (speedBoostPrefab != null &&
+    speedBoostSpawnPoints != null &&
+    speedBoostSpawnPoints.Length > 0)
+{
+    // Seleccionar aleatoriamente uno de los puntos disponibles.
+    int randomIndex = Random.Range(0, speedBoostSpawnPoints.Length);
+
+    Transform selectedPoint = speedBoostSpawnPoints[randomIndex];
+
+    if (selectedPoint != null)
+    {
+        activeSpeedBoost = Instantiate(
+            speedBoostPrefab,
+            selectedPoint.position,
+            selectedPoint.rotation
+        );
+    }
+}
+
+
         Debug.Log(
             "Nivel " + level +
             " generado con " + activeProducts.Count + " productos."
@@ -118,6 +144,14 @@ activeProducts.Add(newProduct);
 
     // Limpiar las referencias de productos anteriores.
     activeProducts.Clear();
+
+    // Eliminar el potenciador del nivel anterior, si todavía existe.
+if (activeSpeedBoost != null)
+{
+    activeSpeedBoost.SetActive(false);
+    Destroy(activeSpeedBoost);
+    activeSpeedBoost = null;
+}
 
     Debug.Log("Productos del nivel anterior limpiados.");
 }

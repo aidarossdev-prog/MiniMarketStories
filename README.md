@@ -31,6 +31,8 @@ Este proyecto se desarrolla como parte de las actividades académicas de la **Li
 - Reinicio de partida desde el nivel 1.
 - Almacenamiento local del nivel y la puntuación mediante PlayerPrefs.
 - Interfaz adaptada a orientación horizontal para dispositivos móviles.
+- Potenciador de velocidad temporal con efecto visual Trail Renderer.
+- Aparición aleatoria de un potenciador por nivel.
 
 ## 🏪 Mecánica de juego
 
@@ -214,6 +216,7 @@ En esta escena se ejecutan las mecánicas de recolección, entrega, generación 
 | `ProductCollector.cs` | Controla la recolección y el transporte de productos. |
 | `ProductDelivery.cs` | Gestiona la entrega y colocación de productos en los anaqueles correspondientes. |
 | `ProductPersistence.cs` | Script de persistencia individual utilizado durante la segunda etapa del desarrollo. |
+| `SpeedBoostPickup.cs` | Detecta la recolección del potenciador y activa el aumento temporal de velocidad. |
 
 ## 🚀 Ejecución del proyecto
 
@@ -355,6 +358,71 @@ Durante las pruebas realizadas en el editor de Unity, las interfaces y transicio
 Las interfaces implementadas permiten que el jugador navegue entre el menú principal, las instrucciones y el escenario de juego de manera funcional.
 
 Asimismo, el sistema de progresión permite continuar jugando durante varios niveles consecutivos, cumpliendo con los objetivos de navegación e interacción establecidos para esta etapa.
+
+## ⚡ Etapa 6. Game Feel y potenciador de velocidad
+
+En esta etapa se implementó una mecánica de *Game Feel* en **Mini Market Stories**, con el propósito de mejorar la respuesta visual del personaje y proporcionar una experiencia de juego más dinámica mediante un potenciador temporal de velocidad.
+
+### Potenciador de velocidad (Speed Boost)
+
+Se incorporó un objeto coleccionable representado por una esfera amarilla que permite aumentar temporalmente la velocidad de desplazamiento del personaje.
+
+La activación ocurre automáticamente cuando el jugador entra en contacto con la esfera, mediante un Collider configurado como Trigger y el script `SpeedBoostPickup.cs`.
+
+Al recoger el potenciador, el objeto desaparece y se activa el aumento de velocidad.
+
+### Configuración del potenciador
+
+| Parámetro | Valor |
+|---|---:|
+| Velocidad normal | 5 |
+| Velocidad con potenciador | 8.5 |
+| Duración del efecto | 2.5 segundos |
+| Duración máxima permitida | 3 segundos |
+| Potenciadores por nivel | 1 |
+| Puntos de aparición disponibles | 4 |
+
+Los parámetros de velocidad y duración pueden modificarse desde el Inspector de Unity.
+
+### Efecto visual mediante Trail Renderer
+
+Para reforzar la percepción del aumento de velocidad, se incorporó un componente `Trail Renderer` al personaje.
+
+Este componente genera una estela de colores rosa y violeta mientras el potenciador permanece activo.
+
+Se creó el material `MAT_SpeedTrail`, utilizando un shader compatible con Universal Render Pipeline (URP), para conservar los colores del degradado y mejorar la visibilidad del efecto.
+
+La estela se activa al recoger el potenciador y deja de generarse cuando termina el aumento de velocidad.
+
+### Generación aleatoria del potenciador
+
+Se integró el Speed Boost al sistema de generación dinámica mediante modificaciones en `LevelGenerator.cs`.
+
+Al comenzar cada nivel, el sistema selecciona aleatoriamente uno de cuatro puntos de aparición distribuidos dentro del minimercado.
+
+Estos puntos son independientes de las posiciones utilizadas para generar los productos, lo que permite conservar la cantidad máxima de productos y evitar interferencias entre los objetos.
+
+El sistema genera únicamente un potenciador por nivel. Si el jugador no lo recoge, se elimina al comenzar el siguiente nivel y se genera uno nuevo.
+
+### Scripts utilizados
+
+- **`PlayerMovement.cs`:** administra el aumento temporal de velocidad, su duración y la activación del efecto visual.
+- **`SpeedBoostPickup.cs`:** detecta el contacto del personaje con el potenciador y activa la mecánica.
+- **`LevelGenerator.cs`:** controla la generación aleatoria del potenciador y elimina los objetos correspondientes al nivel anterior.
+
+### Pruebas de funcionamiento
+
+Se realizaron pruebas dentro del editor de Unity para comprobar la activación del potenciador, el incremento de velocidad, la visualización de la estela y la recuperación de los valores normales al finalizar el efecto.
+
+También se verificó que el Speed Boost apareciera en diferentes posiciones durante la progresión entre niveles, manteniendo un solo potenciador activo por nivel.
+
+### Resultado
+
+La implementación del Speed Boost permite que el jugador experimente un cambio temporal en el desplazamiento del personaje, acompañado de una respuesta visual que facilita identificar cuándo se encuentra activo el potenciador.
+
+Esta mecánica complementa el sistema de niveles y aporta mayor variedad a la experiencia de juego, manteniendo el funcionamiento de la recolección y entrega de productos.
+
+
 
 ## 👩‍💻 Autora
 
