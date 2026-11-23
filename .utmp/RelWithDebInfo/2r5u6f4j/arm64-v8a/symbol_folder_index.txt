@@ -1,0 +1,1 @@
+C:\Users\aidar\Documents\DESARROLLO WEB\Proyectos Unity\MiniMarketStories\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2r5u6f4j\obj\arm64-v8a

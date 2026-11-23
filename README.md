@@ -472,6 +472,95 @@ Los resultados fueron satisfactorios, manteniendo las funcionalidades previament
 
 Estas mejoras permiten que **Mini Market Stories** cuente con un personaje principal más representativo de su identidad visual, además de un sistema de entrega de productos mejor organizado. La implementación se realizó aprovechando la estructura y programación existentes, evitando modificaciones innecesarias en las mecánicas del videojuego.
 
+## Etapa 7. Configuración, compilación y distribución del videojuego
+
+### Descripción
+
+Como parte de la etapa final de desarrollo de **Mini Market Stories**, se realizaron las configuraciones necesarias para exportar el videojuego como una aplicación independiente, permitiendo su ejecución fuera del entorno de desarrollo de Unity.
+
+Para facilitar su distribución y evaluación, se generaron dos versiones del proyecto: una destinada a dispositivos móviles Android y otra compatible con computadoras Windows de 64 bits.
+
+### Configuración para Android
+
+Se configuró el perfil de compilación de Android mediante la herramienta **Build Profiles de Unity 6.2**, estableciendo los parámetros técnicos necesarios para generar el archivo APK.
+
+Las principales configuraciones fueron:
+
+| Parámetro | Configuración |
+|---|---|
+| Nombre de la aplicación | Mini Market Stories |
+| Desarrollador | Ross Games |
+| Versión | 1.0 |
+| Identificador del paquete | `com.rossgames.minimarketstories` |
+| Versión mínima de Android | Android 8.0 (API 26) |
+| API de destino | Automática (nivel más alto instalado) |
+| Arquitectura | ARM64 |
+| Scripting Backend | IL2CPP |
+| Orientación de pantalla | Horizontal (Landscape Left) |
+| Formato de distribución | APK |
+| Firma digital | Clave de depuración |
+
+También se diseñó e implementó un ícono adaptativo para Android, compuesto por imágenes independientes de fondo y primer plano, configuradas en las resoluciones correspondientes.
+
+Para la compilación se utilizaron los módulos oficiales de Unity: Android Build Support, Android SDK & NDK Tools y OpenJDK.
+
+**Archivo generado:** `MiniMarketStories_v1.0.apk`
+
+### Configuración para Windows
+
+Adicionalmente, se creó un perfil de compilación para Windows con arquitectura Intel de 64 bits.
+
+Esta versión permite ejecutar el videojuego directamente en una computadora compatible, sin necesidad de instalar Unity.
+
+La compilación incluye el archivo ejecutable y sus dependencias, organizadas en una carpeta que puede distribuirse mediante un archivo ZIP.
+
+**Archivo de distribución previsto:** `MiniMarketStories_Windows_v1.0.zip`
+
+### Escenas incluidas
+
+Ambas compilaciones incorporan las tres escenas principales del videojuego:
+
+| Escena | Descripción |
+|---|---|
+| `MainMenu` | Pantalla principal y acceso al videojuego. |
+| `MiniMarket` | Entorno tridimensional donde se desarrollan las mecánicas de juego. |
+| `HowToPlay` | Pantalla de instrucciones para el jugador. |
+
+La escena `MainMenu` se estableció como punto de inicio de la aplicación.
+
+### Pruebas de funcionamiento
+
+Se completó satisfactoriamente la compilación del proyecto para Android y Windows.
+
+La versión de Windows se ejecutó fuera del editor de Unity, comprobando el funcionamiento de la aplicación y su navegación principal.
+
+La versión Android se generó correctamente en formato APK. Sin embargo, su funcionamiento en un dispositivo físico permanece pendiente de verificación.
+
+### Distribución del videojuego
+
+Para ejecutar la versión de Windows:
+
+1. Descargar el archivo ZIP de distribución.
+2. Extraer completamente su contenido.
+3. Abrir el archivo `Mini Market Stories.exe`.
+4. Utilizar los controles disponibles para interactuar con el videojuego.
+
+Para instalar la versión Android:
+
+1. Transferir el archivo APK a un dispositivo Android compatible.
+2. Abrir el archivo desde el dispositivo.
+3. Autorizar la instalación desde esa fuente cuando corresponda.
+4. Instalar y ejecutar Mini Market Stories.
+
+La versión Android requiere un dispositivo compatible con la arquitectura ARM64 y Android 8.0 o posterior.
+
+### Resultado de la etapa
+
+La configuración y compilación de **Mini Market Stories** permitió transformar el proyecto desarrollado en Unity en dos versiones independientes para su distribución.
+
+Con ello, se completa el proceso de desarrollo del videojuego, desde la implementación de sus mecánicas y escenarios tridimensionales hasta la preparación de archivos ejecutables para diferentes plataformas.
+
+Esta etapa también permitió comprender la importancia de configurar correctamente los parámetros técnicos de cada sistema operativo y realizar pruebas de funcionamiento antes de distribuir una aplicación.
 
 ## 👩‍💻 Autora
 
